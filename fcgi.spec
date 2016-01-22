@@ -4,7 +4,7 @@
 #
 Name     : fcgi
 Version  : 2.4.0
-Release  : 1
+Release  : 2
 URL      : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
 Source0  : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
 Summary  : No detailed summary available
@@ -22,7 +22,7 @@ BuildRequires : pkg-config-dev
 Patch1: fcgi-2.4.0-Makefile.am-CPPFLAGS.patch
 Patch2: fcgi-2.4.0-configure.in.patch
 Patch3: gcc44-fix-include.patch
-Patch4: poll.patch
+Patch4: cve-2012-6687.patch
 
 %description
 ------------------------------
