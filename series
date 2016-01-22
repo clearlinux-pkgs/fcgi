@@ -1,4 +1,4 @@
 fcgi-2.4.0-Makefile.am-CPPFLAGS.patch
 fcgi-2.4.0-configure.in.patch
 gcc44-fix-include.patch
-poll.patch
+cve-2012-6687.patch
