@@ -4,7 +4,7 @@
 #
 Name     : fcgi
 Version  : 2.4.0
-Release  : 2
+Release  : 3
 URL      : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
 Source0  : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
 Summary  : No detailed summary available
