@@ -1,5 +1,5 @@
 PKG_NAME := fcgi
-URL := http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
-ARCHIVES :=
+URL := https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
+
 
 include ../common/Makefile.common

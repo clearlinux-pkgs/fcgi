@@ -4,9 +4,9 @@
 #
 Name     : fcgi
 Version  : 2.4.0
-Release  : 4
-URL      : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
-Source0  : http://fastcgi.com/dist/fcgi-2.4.0.tar.gz
+Release  : 5
+URL      : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
+Source0  : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : OML
@@ -64,16 +64,20 @@ lib components for the fcgi package.
 %patch4 -p1
 
 %build
+export LANG=C
+export SOURCE_DATE_EPOCH=1490823473
 %reconfigure --disable-static
 make V=1
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
 make VERBOSE=1 V=1 check
 
 %install
+export SOURCE_DATE_EPOCH=1490823473
 rm -rf %{buildroot}
 %make_install
 
@@ -87,8 +91,12 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
-/usr/lib64/*.so
+/usr/lib64/libfcgi++.so
+/usr/lib64/libfcgi.so
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libfcgi++.so.0
+/usr/lib64/libfcgi++.so.0.0.0
+/usr/lib64/libfcgi.so.0
+/usr/lib64/libfcgi.so.0.0.0
