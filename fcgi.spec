@@ -4,7 +4,7 @@
 #
 Name     : fcgi
 Version  : 2.4.0
-Release  : 7
+Release  : 8
 URL      : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
 Source0  : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
 Summary  : No detailed summary available
