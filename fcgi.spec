@@ -4,16 +4,18 @@
 #
 Name     : fcgi
 Version  : 2.4.0
-Release  : 9
+Release  : 10
 URL      : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
 Source0  : https://fossies.org/linux/www/old/fcgi-2.4.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : OML
-Requires: fcgi-bin
-Requires: fcgi-lib
+Requires: fcgi-bin = %{version}-%{release}
+Requires: fcgi-lib = %{version}-%{release}
+Requires: fcgi-license = %{version}-%{release}
 BuildRequires : automake
 BuildRequires : automake-dev
+BuildRequires : buildreq-cpan
 BuildRequires : gettext-bin
 BuildRequires : libtool
 BuildRequires : libtool-dev
@@ -32,6 +34,7 @@ of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 %package bin
 Summary: bin components for the fcgi package.
 Group: Binaries
+Requires: fcgi-license = %{version}-%{release}
 
 %description bin
 bin components for the fcgi package.
@@ -40,9 +43,10 @@ bin components for the fcgi package.
 %package dev
 Summary: dev components for the fcgi package.
 Group: Development
-Requires: fcgi-lib
-Requires: fcgi-bin
-Provides: fcgi-devel
+Requires: fcgi-lib = %{version}-%{release}
+Requires: fcgi-bin = %{version}-%{release}
+Provides: fcgi-devel = %{version}-%{release}
+Requires: fcgi = %{version}-%{release}
 
 %description dev
 dev components for the fcgi package.
@@ -51,34 +55,54 @@ dev components for the fcgi package.
 %package lib
 Summary: lib components for the fcgi package.
 Group: Libraries
+Requires: fcgi-license = %{version}-%{release}
 
 %description lib
 lib components for the fcgi package.
 
 
+%package license
+Summary: license components for the fcgi package.
+Group: Default
+
+%description license
+license components for the fcgi package.
+
+
 %prep
 %setup -q -n fcgi-2.4.0
+cd %{_builddir}/fcgi-2.4.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
 %build
-export LANG=C
-export SOURCE_DATE_EPOCH=1490823473
-%reconfigure --disable-static
-make V=1
-
-%check
-export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
-make VERBOSE=1 V=1 check
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604540862
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+%reconfigure --disable-static
+make
+
+%check
+export LANG=C.UTF-8
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+make check
 
 %install
-export SOURCE_DATE_EPOCH=1490823473
+export SOURCE_DATE_EPOCH=1604540862
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/fcgi
+cp %{_builddir}/fcgi-2.4.0/LICENSE.TERMS %{buildroot}/usr/share/package-licenses/fcgi/1b868f12aa2e288540004670bbe8edfe69d3de88
 %make_install
 
 %files
@@ -90,7 +114,13 @@ rm -rf %{buildroot}
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/fastcgi.h
+/usr/include/fcgi_config.h
+/usr/include/fcgi_stdio.h
+/usr/include/fcgiapp.h
+/usr/include/fcgimisc.h
+/usr/include/fcgio.h
+/usr/include/fcgios.h
 /usr/lib64/libfcgi++.so
 /usr/lib64/libfcgi.so
 
@@ -100,3 +130,7 @@ rm -rf %{buildroot}
 /usr/lib64/libfcgi++.so.0.0.0
 /usr/lib64/libfcgi.so.0
 /usr/lib64/libfcgi.so.0.0.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/fcgi/1b868f12aa2e288540004670bbe8edfe69d3de88
